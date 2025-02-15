@@ -1,4 +1,4 @@
-package com.example.shoes.ui.screen.signIn
+package com.example.shoes.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,40 +13,31 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFrom
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.shoes.R
-import com.example.shoes.ui.theme.ShoesTextStyles
 import com.example.shoes.ui.theme.ShoesTheme
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.MutableState
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
@@ -78,7 +69,7 @@ fun SignInScreen(){
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(R.string.sign_up),
+                    text = stringResource(R.string.sign_up_down),
                     style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.subTextDark),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -100,7 +91,7 @@ fun SignInContent(paddingValues: PaddingValues){
     ) {
         TitleWithSubtitleText(
             title = stringResource(R.string.hello),
-            subTitle = stringResource(R.string.sign_in_subtitle)
+            subTitle = stringResource(R.string.sign_in_up_subtitle)
         )
 
         val email = remember { mutableStateOf("") }
@@ -125,7 +116,7 @@ fun SignInContent(paddingValues: PaddingValues){
             labelText = stringResource(R.string.password),
             placeHolder = {
                 Image(
-                    painter = painterResource(id = R.drawable.dots),
+                    painter = painterResource(R.drawable.dots),
                     contentDescription = null
                 )
             },
@@ -145,7 +136,7 @@ fun SignInContent(paddingValues: PaddingValues){
                 .clickable { }
         )
 
-        CommonButton(
+        AuthCommonButton(
             modifier = Modifier.padding(top = 24.dp),
             buttonLabel = stringResource(R.string.sign_in)){
 
@@ -235,7 +226,7 @@ fun AuthTextFiled(
                     onClick = { isPasswordVisible.value = !isPasswordVisible.value },
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(end = 12.dp)
+                        .padding(end = 7.dp)
                 ) {
                     val icon = if (isPasswordVisible.value) {
                         R.drawable.open_eye
@@ -245,7 +236,8 @@ fun AuthTextFiled(
                     Icon(
                         painter = painterResource(id = icon),
                         contentDescription = null,
-                        tint = ShoesTheme.colors.hint
+                        tint = ShoesTheme.colors.hint,
+                        modifier = Modifier.width(16.37.dp).height(13.dp)
                     )
                 }
             }
@@ -254,7 +246,7 @@ fun AuthTextFiled(
 }
 
 @Composable
-fun CommonButton(modifier: Modifier, buttonLabel: String, onClick: () -> Unit) {
+fun AuthCommonButton(modifier: Modifier, buttonLabel: String, onClick: () -> Unit) {
     Button(
         modifier = modifier
             .padding(horizontal = 20.dp)
