@@ -194,6 +194,7 @@ fun RegTitleWithSubtitleText(title: String, subTitle: String){
             textAlign = TextAlign.Center
         )
         Text (
+            modifier = Modifier.padding(top = 8.dp),
             text = subTitle,
             style = ShoesTheme.typography.subTitleRegular16.copy(color = ShoesTheme.colors.subTextDark),
             textAlign = TextAlign.Center
