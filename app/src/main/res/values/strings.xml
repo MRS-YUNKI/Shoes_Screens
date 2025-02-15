@@ -1,12 +1,17 @@
 <resources>
     <string name="app_name">Shoes</string>
     <string name="hello">Привет!</string>
-    <string name="sign_in_subtitle">Заполните Свои данные или продолжите через социальные медиа</string>
+    <string name="sign_in_up_subtitle">Заполните Свои данные или продолжите через социальные медиа</string>
     <string name="template_email">xyz@gmail.com</string>
     <string name="email">Email</string>
     <string name="sign_in">Войти</string>
-    <string name="sign_up">Вы впервые? Создать пользователя</string>
-    <string name="password">Password</string>
-    <string name="template_password">*********</string>
+    <string name="sign_up_down">Вы впервые? Создать пользователя</string>
+    <string name="password">Пароль</string>
     <string name="reset_password">Восстановить</string>
+    <string name="sign_in_down">Есть аккаунт? Войти</string>
+    <string name="sign_up_up">Регистрация</string>
+    <string name="name">Ваше имя</string>
+    <string name="template_name">x x x x x x x x</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="personal_data">Даю согласие на обработку персональных данных</string>
 </resources>

@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.shoes.ui.screen.signIn.SignInScreen
+import com.example.shoes.ui.screen.SignInScreen
+import com.example.shoes.ui.screen.SignUpScreen
 import com.example.shoes.ui.theme.ShoesTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ShoesTheme {
-                SignInScreen()
+                SignUpScreen()
             }
         }
     }
