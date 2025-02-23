@@ -1,4 +1,4 @@
-package com.example.shoes.ui.screen
+package com.example.shoes.ui.screen.signIn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
