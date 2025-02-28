@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -34,16 +33,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.shoes.R
 import com.example.shoes.ui.theme.ShoesTheme
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.shoes.ui.screen.signIn.component.AuthButton
 
 
 @Composable
 fun SignInScreen(){
+    val signInViewModel: SignInViewModel = viewModel()
     Scaffold(
         topBar = {
             Row(
@@ -80,12 +81,13 @@ fun SignInScreen(){
             }
         }
     ) { paddingValues ->
-        SignInContent(paddingValues)
+        SignInContent(paddingValues, signInViewModel)
     }
 }
 
 @Composable
-fun SignInContent(paddingValues: PaddingValues){
+fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel){
+    val signInState = signInViewModel.signInState
     Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
@@ -94,7 +96,6 @@ fun SignInContent(paddingValues: PaddingValues){
             subTitle = stringResource(R.string.sign_in_up_subtitle)
         )
 
-        val email = remember { mutableStateOf("") }
         Spacer(modifier = Modifier.height((35.dp)))
         AuthTextFiled(
             labelText = stringResource(R.string.email),
@@ -104,13 +105,13 @@ fun SignInContent(paddingValues: PaddingValues){
                     style = ShoesTheme.typography.bodyRegular14.copy(color = ShoesTheme.colors.hint)
                 )
             },
-            value = email.value,
+            value = signInState.value.email,
             onChangeValue = {
-                email.value = it
-            }
+                signInViewModel.setEmail(it)
+            },
+            isError = signInViewModel.emailHasError.value
         )
 
-        val password = remember { mutableStateOf("") }
         Spacer(modifier = Modifier.height((30.dp)))
         AuthTextFiled(
             labelText = stringResource(R.string.password),
@@ -120,11 +121,12 @@ fun SignInContent(paddingValues: PaddingValues){
                     contentDescription = null
                 )
             },
-            value = password.value,
+            value = signInState.value.password,
             onChangeValue = {
-                password.value = it
+                signInViewModel.setPassword(it)
             },
-            isPassword = true
+            isPassword = true,
+            isError = false
         )
 
         Text(
@@ -136,10 +138,10 @@ fun SignInContent(paddingValues: PaddingValues){
                 .clickable { }
         )
 
-        AuthCommonButton(
-            modifier = Modifier.padding(top = 24.dp),
-            buttonLabel = stringResource(R.string.sign_in)){
-
+        AuthButton(
+            onClick = {}
+        ) {
+            Text(stringResource(R.string.sign_in))
         }
     }
 }
@@ -171,6 +173,7 @@ fun AuthTextFiled(
     value: String,
     onChangeValue: (String) -> Unit,
     placeHolder: @Composable (() -> Unit)? = null,
+    isError: Boolean,
     labelText: String? = null,
     isPassword: Boolean = false
 ) {
@@ -238,29 +241,12 @@ fun AuthTextFiled(
                         painter = painterResource(id = icon),
                         contentDescription = null,
                         tint = ShoesTheme.colors.hint,
-                        modifier = Modifier.width(16.37.dp).height(13.dp)
+                        modifier = Modifier
+                            .width(16.37.dp)
+                            .height(13.dp)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun AuthCommonButton(modifier: Modifier, buttonLabel: String, onClick: () -> Unit) {
-    Button(
-        modifier = modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxWidth()
-            .height(50.dp)
-            .clip(RoundedCornerShape(14.dp)),
-        colors = ButtonDefaults.buttonColors(containerColor = ShoesTheme.colors.accent),
-        onClick = onClick
-    ) {
-        Text(
-            text = buttonLabel,
-            style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.background),
-            textAlign = TextAlign.Center
-        )
     }
 }

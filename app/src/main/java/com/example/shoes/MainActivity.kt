@@ -14,8 +14,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             ShoesTheme {
                 SignInScreen()
-                //SignUpScreen()
-                //ForgotPasswordScreen()
             }
         }
     }
