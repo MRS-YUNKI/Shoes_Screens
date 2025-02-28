@@ -17,4 +17,6 @@
     <string name="forgot_password_title">Забыл пароль</string>
     <string name="forgot_password_subtitle">Введите свою учетную запись для сброса</string>
     <string name="send_message">Отправить</string>
+    <string name="incorrect_password">Неправильный пароль!</string>
+    <string name="incorrect_email">Неправильная почта!</string>
 </resources>

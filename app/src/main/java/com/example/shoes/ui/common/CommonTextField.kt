@@ -2,7 +2,9 @@ package com.example.shoes.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,36 +30,40 @@ fun CommonTextField(
     supportingText: @Composable () -> Unit = {},
     placeHolder: @Composable () -> Unit = {}
 ) {
-    val interaction = remember {MutableInteractionSource()}
-    BasicTextField(
-        value = value,
-        onValueChange = {onChangeValue(it)},
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .background(ShoesTheme.colors.background)
-    ){ InnerTextField ->
-        TextFieldDefaults.DecorationBox(
+    val interaction = remember { MutableInteractionSource() }
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+        BasicTextField(
             value = value,
-            innerTextField = InnerTextField,
-            enabled = true,
-            singleLine = true,
-            visualTransformation = visualTransformation,
-            interactionSource = interaction,
-            trailingIcon = trailingIcon,
-            isError = isError,
-            supportingText = if (isError) supportingText else null,
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = ShoesTheme.colors.background,
-                disabledContainerColor = ShoesTheme.colors.background,
-                unfocusedContainerColor = ShoesTheme.colors.background,
-                errorContainerColor = ShoesTheme.colors.background,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Red
-            ),
-            placeholder = placeHolder
-        )
+            onValueChange = { onChangeValue(it) },
+            modifier = modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(14.dp))
+                .background(ShoesTheme.colors.background)
+                .padding(end = 24.dp)
+        ) { innerTextField ->
+            TextFieldDefaults.DecorationBox(
+                value = value,
+                innerTextField = innerTextField,
+                enabled = true,
+                singleLine = true,
+                visualTransformation = visualTransformation,
+                interactionSource = interaction,
+                trailingIcon = trailingIcon,
+                isError = isError,
+                supportingText = if (isError) supportingText else null,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = ShoesTheme.colors.background,
+                    disabledContainerColor = ShoesTheme.colors.background,
+                    unfocusedContainerColor = ShoesTheme.colors.background,
+                    errorContainerColor = ShoesTheme.colors.background,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Red
+                ),
+                placeholder = placeHolder
+            )
+        }
     }
 }

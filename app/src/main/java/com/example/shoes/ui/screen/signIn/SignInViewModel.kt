@@ -13,10 +13,17 @@ class SignInViewModel : ViewModel() {
         !android.util.Patterns.EMAIL_ADDRESS.matcher(signInState.value.email).matches()
     }
 
-    fun setEmail(email: String){
+    val passwordHasError = derivedStateOf {
+        val passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$".toRegex()
+        if(signInState.value.password.isEmpty()) return@derivedStateOf false
+        !passwordPattern.matches(signInState.value.password)
+    }
+
+    fun setEmail(email: String) {
         signInState.value = signInState.value.copy(email = email)
     }
-    fun setPassword(password: String){
+
+    fun setPassword(password: String) {
         signInState.value = signInState.value.copy(password = password)
     }
 }

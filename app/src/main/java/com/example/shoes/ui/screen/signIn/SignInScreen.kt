@@ -40,6 +40,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoes.ui.screen.signIn.component.AuthButton
+import com.example.shoes.ui.screen.signIn.component.AuthTextField
+import com.example.shoes.ui.screen.signIn.component.TitleWithSubtitleText
 
 
 @Composable
@@ -97,9 +99,8 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
         )
 
         Spacer(modifier = Modifier.height((35.dp)))
-        AuthTextFiled(
-            labelText = stringResource(R.string.email),
-            placeHolder = {
+        AuthTextField(
+            placeholder = {
                 Text(
                     text = stringResource(R.string.template_email),
                     style = ShoesTheme.typography.bodyRegular14.copy(color = ShoesTheme.colors.hint)
@@ -109,13 +110,23 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
             onChangeValue = {
                 signInViewModel.setEmail(it)
             },
-            isError = signInViewModel.emailHasError.value
+            isError = signInViewModel.emailHasError.value,
+            supportingText = {
+                             Text(
+                                 text = stringResource(R.string.incorrect_email)
+                             )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.email),
+                    style = ShoesTheme.typography.bodyRegular16.copy(ShoesTheme.colors.text)
+                )
+            }
         )
 
         Spacer(modifier = Modifier.height((30.dp)))
-        AuthTextFiled(
-            labelText = stringResource(R.string.password),
-            placeHolder = {
+        AuthTextField(
+            placeholder = {
                 Image(
                     painter = painterResource(R.drawable.dots),
                     contentDescription = null
@@ -126,7 +137,18 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
                 signInViewModel.setPassword(it)
             },
             isPassword = true,
-            isError = false
+            isError = signInViewModel.passwordHasError.value,
+            supportingText = {
+                Text(
+                    text = stringResource(R.string.incorrect_password)
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.password),
+                    style = ShoesTheme.typography.bodyRegular16.copy(ShoesTheme.colors.text)
+                )
+            }
         )
 
         Text(
@@ -142,111 +164,6 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
             onClick = {}
         ) {
             Text(stringResource(R.string.sign_in))
-        }
-    }
-}
-
-@Composable
-fun TitleWithSubtitleText(title: String, subTitle: String){
-    Column (
-        modifier = Modifier.padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text (
-            text = title,
-            style = ShoesTheme.typography.headingBold32.copy(color = ShoesTheme.colors.text),
-            textAlign = TextAlign.Center
-        )
-        Text (
-            modifier = Modifier.padding(top = 8.dp),
-            text = subTitle,
-            style = ShoesTheme.typography.subTitleRegular16.copy(color = ShoesTheme.colors.subTextDark),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AuthTextFiled(
-    value: String,
-    onChangeValue: (String) -> Unit,
-    placeHolder: @Composable (() -> Unit)? = null,
-    isError: Boolean,
-    labelText: String? = null,
-    isPassword: Boolean = false
-) {
-    val isPasswordVisible = remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .wrapContentSize(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        if (labelText != null) {
-            Text(
-                text = labelText,
-                style = ShoesTheme.typography.bodyRegular16.copy(ShoesTheme.colors.text),
-                textAlign = TextAlign.Right
-            )
-        }
-        val interaction = remember { MutableInteractionSource() }
-
-        Box(modifier = Modifier.fillMaxWidth()) {
-            BasicTextField(
-                value = value,
-                onValueChange = { onChangeValue(it) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(ShoesTheme.colors.background)
-                    .padding(end = 24.dp),
-                visualTransformation = if (isPassword && !isPasswordVisible.value) PasswordVisualTransformation() else VisualTransformation.None
-            ) { innerTextField ->
-                TextFieldDefaults.DecorationBox(
-                    value = value,
-                    innerTextField = innerTextField,
-                    enabled = true,
-                    singleLine = true,
-                    visualTransformation = VisualTransformation.None,
-                    interactionSource = interaction,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = ShoesTheme.colors.background,
-                        disabledContainerColor = ShoesTheme.colors.background,
-                        unfocusedContainerColor = ShoesTheme.colors.background,
-                        errorContainerColor = ShoesTheme.colors.background,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                        errorIndicatorColor = Color.Transparent
-                    ),
-                    placeholder = placeHolder
-                )
-            }
-            if (isPassword) {
-                IconButton(
-                    onClick = { isPasswordVisible.value = !isPasswordVisible.value },
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 7.dp)
-                ) {
-                    val icon = if (isPasswordVisible.value) {
-                        R.drawable.open_eye
-                    } else {
-                        R.drawable.close_eye
-                    }
-                    Icon(
-                        painter = painterResource(id = icon),
-                        contentDescription = null,
-                        tint = ShoesTheme.colors.hint,
-                        modifier = Modifier
-                            .width(16.37.dp)
-                            .height(13.dp)
-                    )
-                }
-            }
         }
     }
 }
