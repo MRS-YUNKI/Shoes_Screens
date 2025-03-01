@@ -36,10 +36,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.shoes.ui.screen.forgotPassword.component.ForgotPasswordButton
+import com.example.shoes.ui.screen.forgotPassword.component.ForgotPasswordTextField
+import com.example.shoes.ui.screen.forgotPassword.component.TitleWithSubtitleText
+import com.example.shoes.ui.screen.signUp.SignUpViewModel
 
 
 @Composable
 fun ForgotPasswordScreen(){
+    val forgotPasswordViewModel: ForgotPasswordViewModel = viewModel()
     Scaffold(
         topBar = {
             Row(
@@ -57,138 +63,47 @@ fun ForgotPasswordScreen(){
             }
         }
     ) { paddingValues ->
-        ForgotPasswordContent(paddingValues)
+        ForgotPasswordContent(paddingValues, forgotPasswordViewModel)
     }
 }
 
 @Composable
-fun ForgotPasswordContent(paddingValues: PaddingValues){
+fun ForgotPasswordContent(paddingValues: PaddingValues, forgotPasswordViewModel: ForgotPasswordViewModel){
+    val forgotPasswordState = forgotPasswordViewModel.forgotPasswordState.value
     Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
-        ForgotPasswordTitleWithSubtitleText(
+        TitleWithSubtitleText(
             title = stringResource(R.string.forgot_password_title),
             subTitle = stringResource(R.string.forgot_password_subtitle)
         )
 
-        val email = remember { mutableStateOf("") }
         Spacer(modifier = Modifier.height((40.dp)))
-        ForgotPasswordTextFiled(
-            placeHolder = {
+        ForgotPasswordTextField(
+            placeholder = {
                 Text(
                     text = stringResource(R.string.template_email),
                     style = ShoesTheme.typography.bodyRegular14.copy(color = ShoesTheme.colors.hint)
                 )
             },
-            value = email.value,
+            value = forgotPasswordState.email,
             onChangeValue = {
-                email.value = it
-            }
-        )
-
-        ForgotPasswordCommonButton(
-            modifier = Modifier.padding(top = 40.dp),
-            buttonLabel = stringResource(R.string.send_message)
-        ){
-
-        }
-    }
-}
-
-@Composable
-fun ForgotPasswordTitleWithSubtitleText(title: String, subTitle: String){
-    Column (
-        modifier = Modifier.padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text (
-            text = title,
-            style = ShoesTheme.typography.headingBold32.copy(color = ShoesTheme.colors.text),
-            textAlign = TextAlign.Center
-        )
-        Text (
-            modifier = Modifier.padding(top = 13.dp),
-            text = subTitle,
-            style = ShoesTheme.typography.subTitleRegular16.copy(color = ShoesTheme.colors.subTextDark),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ForgotPasswordTextFiled(
-    value: String,
-    onChangeValue: (String) -> Unit,
-    placeHolder: @Composable (() -> Unit)? = null,
-    labelText: String? = null
-) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .wrapContentSize(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        if (labelText != null) {
-            Text(
-                text = labelText,
-                style = ShoesTheme.typography.bodyRegular16.copy(ShoesTheme.colors.text),
-                textAlign = TextAlign.Right
-            )
-        }
-        val interaction = remember { MutableInteractionSource() }
-
-        Box(modifier = Modifier.fillMaxWidth()) {
-            BasicTextField(
-                value = value,
-                onValueChange = { onChangeValue(it) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(ShoesTheme.colors.background)
-                    .padding(end = 24.dp)
-            ) { innerTextField ->
-                TextFieldDefaults.DecorationBox(
-                    value = value,
-                    innerTextField = innerTextField,
-                    enabled = true,
-                    singleLine = true,
-                    visualTransformation = VisualTransformation.None,
-                    interactionSource = interaction,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = ShoesTheme.colors.background,
-                        disabledContainerColor = ShoesTheme.colors.background,
-                        unfocusedContainerColor = ShoesTheme.colors.background,
-                        errorContainerColor = ShoesTheme.colors.background,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                        errorIndicatorColor = Color.Transparent
-                    ),
-                    placeholder = placeHolder
+                forgotPasswordViewModel.setEmail(it)
+            },
+            isError = forgotPasswordViewModel.emailHasError.value,
+            supportingText = {
+                Text(
+                    text = stringResource(R.string.incorrect_email)
                 )
+            },
+            label = {
             }
-
-        }
-    }
-}
-
-@Composable
-fun ForgotPasswordCommonButton(modifier: Modifier, buttonLabel: String, onClick: () -> Unit) {
-    Button(
-        modifier = modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxWidth()
-            .height(50.dp)
-            .clip(RoundedCornerShape(14.dp)),
-        colors = ButtonDefaults.buttonColors(containerColor = ShoesTheme.colors.accent),
-        onClick = onClick
-    ) {
-        Text(
-            text = buttonLabel,
-            style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.background),
-            textAlign = TextAlign.Center
         )
+
+        ForgotPasswordButton(
+            onClick = {},
+        ) {
+            Text(stringResource(R.string.send_message))
+        }
     }
 }

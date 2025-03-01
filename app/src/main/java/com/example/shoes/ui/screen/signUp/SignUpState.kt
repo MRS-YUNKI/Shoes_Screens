@@ -6,6 +6,6 @@ data class SignUpState(
     var password: String = "",
     var isVisiblePassword: Boolean = false,
     var isLoading: Boolean = false,
-    var isSignIn: Boolean = false,
+    var isSignUp: Boolean = false,
     var errorMessage: String? = null
 )
