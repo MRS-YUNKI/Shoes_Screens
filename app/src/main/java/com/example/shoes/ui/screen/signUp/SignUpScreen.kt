@@ -1,4 +1,4 @@
-package com.example.shoes.ui.screen.signIn
+package com.example.shoes.ui.screen.signUp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -33,20 +35,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.shoes.R
 import com.example.shoes.ui.theme.ShoesTheme
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.shoes.ui.screen.signIn.component.AuthButton
-import com.example.shoes.ui.screen.signIn.component.AuthTextField
-import com.example.shoes.ui.screen.signIn.component.TitleWithSubtitleText
+import com.example.shoes.ui.screen.signUp.component.RegButton
+import com.example.shoes.ui.screen.signUp.component.RegTextField
+import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
 
 
 @Composable
-fun SignInScreen(){
-    val signInViewModel: SignInViewModel = viewModel()
+fun SignUpScreen(){
+    val signUpViewModel: SignUpViewModel = viewModel()
     Scaffold(
         topBar = {
             Row(
@@ -72,7 +76,7 @@ fun SignInScreen(){
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(R.string.sign_up_down),
+                    text = stringResource(R.string.sign_in_down),
                     style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.subTextDark),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -83,35 +87,60 @@ fun SignInScreen(){
             }
         }
     ) { paddingValues ->
-        SignInContent(paddingValues, signInViewModel)
+        SignUpContent(paddingValues, signUpViewModel)
     }
 }
 
 @Composable
-fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel) {
-    val signInState = signInViewModel.signInState.value
-
-    Column(
+fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel){
+    val signUpState = signUpViewModel.signUpState.value
+    Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         TitleWithSubtitleText(
-            title = stringResource(R.string.hello),
+            title = stringResource(R.string.sign_up_up),
             subTitle = stringResource(R.string.sign_in_up_subtitle)
         )
 
         Spacer(modifier = Modifier.height((35.dp)))
-        AuthTextField(
+        RegTextField(
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.template_name),
+                    style = ShoesTheme.typography.bodyRegular14.copy(color = ShoesTheme.colors.hint)
+                )
+            },
+            value = signUpState.name,
+            onChangeValue = {
+                signUpViewModel.setName(it)
+            },
+            isError = signUpViewModel.nameHasError.value,
+            supportingText = {
+                Text(
+                    text = stringResource(R.string.incorrect_name)
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.name),
+                    style = ShoesTheme.typography.bodyRegular16.copy(ShoesTheme.colors.text)
+                )
+            }
+        )
+
+        Spacer(modifier = Modifier.height((12.dp)))
+        RegTextField(
             placeholder = {
                 Text(
                     text = stringResource(R.string.template_email),
                     style = ShoesTheme.typography.bodyRegular14.copy(color = ShoesTheme.colors.hint)
                 )
             },
-            value = signInState.email,
+            value = signUpState.email,
             onChangeValue = {
-                signInViewModel.setEmail(it)
+                signUpViewModel.setEmail(it)
             },
-            isError = signInViewModel.emailHasError.value,
+            isError = signUpViewModel.emailHasError.value,
             supportingText = {
                 Text(
                     text = stringResource(R.string.incorrect_email)
@@ -125,22 +154,22 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
             }
         )
 
-        Spacer(modifier = Modifier.height((30.dp)))
-        AuthTextField(
+        Spacer(modifier = Modifier.height((12.dp)))
+        RegTextField(
             placeholder = {
                 Image(
-                    painter = painterResource(R.drawable.dots),
+                    painter = painterResource(id = R.drawable.dots),
                     contentDescription = null
                 )
             },
-            value = signInState.password,
+            value = signUpState.password,
             onChangeValue = {
-                signInViewModel.setPassword(it)
+                signUpViewModel.setPassword(it)
             },
             isPassword = true,
-            isPasswordVisible = signInState.isVisiblePassword,
-            togglePasswordVisibility = { signInViewModel.togglePasswordVisibility() },
-            isError = signInViewModel.passwordHasError.value,
+            isPasswordVisible = signUpState.isVisiblePassword,
+            togglePasswordVisibility = { signUpViewModel.togglePasswordVisibility() },
+            isError = signUpViewModel.passwordHasError.value,
             supportingText = {
                 Text(
                     text = stringResource(R.string.incorrect_password)
@@ -154,19 +183,36 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
             }
         )
 
-        Text(
-            text = stringResource(R.string.reset_password),
-            style = ShoesTheme.typography.bodyRegular12.copy(ShoesTheme.colors.subTextDark),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(top = 12.dp, end = 24.dp)
-                .align(Alignment.End)
-                .clickable { }
-        )
+                .padding(top = 12.dp)
+                .clickable {
 
-        AuthButton(
+                }
+        ) {
+            Spacer(modifier = Modifier.padding(12.dp))
+            Icon(
+                painter = painterResource(R.drawable.personal_data),
+                contentDescription = null,
+                modifier = Modifier.size(10.dp),
+                tint = Color.Unspecified
+            )
+            Spacer(modifier = Modifier.padding(12.dp))
+            Text(
+                text = stringResource(R.string.personal_data),
+                style = ShoesTheme.typography.bodyRegular16.copy(ShoesTheme.colors.subTextDark),
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier
+                    .padding(end = 22.dp)
+                    .clickable { }
+            )
+        }
+
+        RegButton(
             onClick = {}
         ) {
-            Text(stringResource(R.string.sign_in))
+          Text(stringResource(R.string.sign_up))
         }
     }
 }

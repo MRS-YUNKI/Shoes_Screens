@@ -1,4 +1,4 @@
-package com.example.shoes.ui.screen.signIn.component
+package com.example.shoes.ui.screen.signUp.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
@@ -9,7 +9,7 @@ import com.example.shoes.ui.common.CommonButton
 import com.example.shoes.ui.theme.ShoesTheme
 
 @Composable
-fun AuthButton(
+fun RegButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
@@ -22,7 +22,7 @@ fun AuthButton(
             disabledContentColor = ShoesTheme.colors.accent,
             disabledContainerColor = ShoesTheme.colors.accent
         ),
-        modifier = modifier.padding(top = 50.dp),
+        modifier = modifier.padding(top = 24.dp),
     ) {
         content()
     }

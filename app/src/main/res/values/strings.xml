@@ -19,4 +19,5 @@
     <string name="send_message">Отправить</string>
     <string name="incorrect_password">Неправильный пароль!</string>
     <string name="incorrect_email">Неправильная почта!</string>
+    <string name="incorrect_name">Неправильное имя!</string>
 </resources>

@@ -26,4 +26,8 @@ class SignInViewModel : ViewModel() {
     fun setPassword(password: String) {
         signInState.value = signInState.value.copy(password = password)
     }
+
+    fun togglePasswordVisibility() {
+        signInState.value = signInState.value.copy(isVisiblePassword = !signInState.value.isVisiblePassword)
+    }
 }
