@@ -39,13 +39,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.shoes.data.RetrofitClient
+import com.example.shoes.data.User
 import com.example.shoes.ui.screen.signUp.component.RegButton
 import com.example.shoes.ui.screen.signUp.component.RegTextField
 import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.coroutineContext
 
 
 @Composable
@@ -94,6 +99,7 @@ fun SignUpScreen(){
 @Composable
 fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel){
     val signUpState = signUpViewModel.signUpState.value
+    val coroutine = rememberCoroutineScope{Dispatchers.IO}
     Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
@@ -210,7 +216,14 @@ fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel
         }
 
         RegButton(
-            onClick = {}
+            onClick = {
+                val user = User(
+                    userName = signUpState.name,
+                    email = signUpState.email,
+                    password = signUpState.password
+                )
+                RetrofitClient.retrofit.registration(user)
+            }
         ) {
           Text(stringResource(R.string.sign_up))
         }
