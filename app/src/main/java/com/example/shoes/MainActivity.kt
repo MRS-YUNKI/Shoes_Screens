@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.internal.composableLambda
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shoes.ui.screen.signIn.SignInScreen
 import com.example.shoes.ui.screen.signUp.SignUpScreen
 import com.example.shoes.ui.screen.splashscreen.SplashScreen
 import com.example.shoes.ui.theme.ShoesTheme
@@ -30,6 +32,9 @@ class MainActivity : ComponentActivity() {
                         SignUpScreen() {
                             navController.navigate(route = Profile)
                         }
+                    }
+                    composable<Profile> {
+                        SignInScreen()
                     }
                 }
             }

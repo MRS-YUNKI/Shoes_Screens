@@ -4,7 +4,10 @@ import android.util.Patterns
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.shoes.ui.screen.signIn.SignInState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
     var signUpState = mutableStateOf(SignUpState())
@@ -41,5 +44,14 @@ class SignUpViewModel : ViewModel() {
 
     fun togglePasswordVisibility() {
         signUpState.value = signUpState.value.copy(isVisiblePassword = !signUpState.value.isVisiblePassword)
+    }
+
+    fun registration() {
+        viewModelScope.launch {
+            delay(2000)
+            signUpState.value = signUpState
+                .value
+                .copy(isSignUp =  true)
+        }
     }
 }

@@ -39,6 +39,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
@@ -51,6 +52,7 @@ import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
 @Composable
 fun SignUpScreen(onNavigationToProfile: () -> Unit){
     val signUpViewModel: SignUpViewModel = viewModel()
+
     Scaffold(
         topBar = {
             Row(
@@ -87,13 +89,18 @@ fun SignUpScreen(onNavigationToProfile: () -> Unit){
             }
         }
     ) { paddingValues ->
-        SignUpContent(paddingValues, signUpViewModel)
+        SignUpContent(paddingValues, signUpViewModel, onNavigationToProfile)
     }
 }
 
 @Composable
-fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel){
+fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel, onNavigationToProfile: () -> Unit){
     val signUpState = signUpViewModel.signUpState.value
+    LaunchedEffect(signUpState.isSignUp) {
+        if (signUpState.isSignUp) {
+            onNavigationToProfile()
+        }
+    }
     Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
@@ -210,7 +217,9 @@ fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel
         }
 
         RegButton(
-            onClick = {}
+            onClick = {
+                signUpViewModel.registration()
+            }
         ) {
           Text(stringResource(R.string.sign_up))
         }
