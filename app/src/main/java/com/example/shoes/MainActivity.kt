@@ -33,7 +33,12 @@ class MainActivity : ComponentActivity() {
             ShoesTheme {
                 NavHost(navController, startDestination = SplashScreen) {
                     composable<SplashScreen> {
-                        SplashScreen() {
+                        SplashScreen(
+                            authUseCase = authUseCase,
+                            onNavigationToProfile = {
+                                navController.navigate(route = Profile)
+                            }
+                        ) {
                             navController.navigate(route = Registration)
                         }
                     }
