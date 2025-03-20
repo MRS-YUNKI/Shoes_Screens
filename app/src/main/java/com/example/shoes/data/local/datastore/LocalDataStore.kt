@@ -1,4 +1,4 @@
-package com.example.shoes.data.datastore
+package com.example.shoes.data.local.datastore
 
 import android.content.Context
 import com.example.shoes.data.local.AuthLocalStore

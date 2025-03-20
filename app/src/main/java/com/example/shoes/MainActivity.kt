@@ -4,14 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.shoes.ui.screen.forgotPassword.ForgotPasswordScreen
-import com.example.shoes.ui.screen.signIn.SignInScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.shoes.ui.screen.signUp.SignUpScreen
+import com.example.shoes.ui.screen.splashscreen.SplashScreen
 import com.example.shoes.ui.theme.ShoesTheme
+import kotlinx.serialization.Serializable
 
 
 class MainActivity : ComponentActivity() {
@@ -19,9 +18,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             ShoesTheme {
-                SignUpScreen()
+                NavHost(navController, startDestination = SplashScreen) {
+                    composable<SplashScreen> {
+                        SplashScreen() {
+                            navController.navigate(route = Registration)
+                        }
+                    }
+                    composable<Registration> {
+                        SignUpScreen() {
+                            navController.navigate(route = Profile)
+                        }
+                    }
+                }
             }
         }
     }
 }
+
+@Serializable
+object SplashScreen
+@Serializable
+object Registration
+@Serializable
+object Profile

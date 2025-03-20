@@ -49,7 +49,7 @@ import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
 
 
 @Composable
-fun SignUpScreen(){
+fun SignUpScreen(onNavigationToProfile: () -> Unit){
     val signUpViewModel: SignUpViewModel = viewModel()
     Scaffold(
         topBar = {
