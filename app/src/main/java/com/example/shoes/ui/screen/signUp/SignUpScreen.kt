@@ -36,24 +36,31 @@ import androidx.compose.ui.unit.dp
 import com.example.shoes.R
 import com.example.shoes.ui.theme.ShoesTheme
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.shoes.data.Auth
+import com.example.shoes.data.domain.usecase.AuthUseCase
 import com.example.shoes.ui.screen.signUp.component.RegButton
 import com.example.shoes.ui.screen.signUp.component.RegTextField
 import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
 
 
 @Composable
-fun SignUpScreen(onNavigationToProfile: () -> Unit){
-    val signUpViewModel: SignUpViewModel = viewModel()
+fun SignUpScreen(authUseCase: AuthUseCase, onNavigationToProfile: () -> Unit){
+    val signUpViewModel = SignUpViewModel(authUseCase)
+    val snackBarHostState = remember { SnackbarHostState() }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackBarHostState)},
         topBar = {
             Row(
                 modifier = Modifier
@@ -89,16 +96,21 @@ fun SignUpScreen(onNavigationToProfile: () -> Unit){
             }
         }
     ) { paddingValues ->
-        SignUpContent(paddingValues, signUpViewModel, onNavigationToProfile)
+        SignUpContent(paddingValues, signUpViewModel, onNavigationToProfile, snackBarHostState)
     }
 }
 
 @Composable
-fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel, onNavigationToProfile: () -> Unit){
+fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel, onNavigationToProfile: () -> Unit, snackbarHostState: SnackbarHostState){
     val signUpState = signUpViewModel.signUpState.value
     LaunchedEffect(signUpState.isSignUp) {
         if (signUpState.isSignUp) {
             onNavigationToProfile()
+        }
+    }
+    LaunchedEffect(signUpState.errorMessage) {
+        signUpState.errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
         }
     }
     Column (
@@ -222,6 +234,7 @@ fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel
             }
         ) {
           Text(stringResource(R.string.sign_up))
+            if (signUpState.isLoading) CircularProgressIndicator(color = Color.White)
         }
     }
 }

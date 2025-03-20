@@ -5,11 +5,15 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoes.data.domain.usecase.AuthUseCase
+import com.example.shoes.data.model.RegistrationRequest
+import com.example.shoes.data.remote.NetworkResponse
 import com.example.shoes.ui.screen.signIn.SignInState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.sign
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(val authUseCase: AuthUseCase) : ViewModel() {
     var signUpState = mutableStateOf(SignUpState())
         private set
 
@@ -46,12 +50,38 @@ class SignUpViewModel : ViewModel() {
         signUpState.value = signUpState.value.copy(isVisiblePassword = !signUpState.value.isVisiblePassword)
     }
 
+    private fun setErrorMessage(message: String) {
+        signUpState.value = signUpState.value.copy(errorMessage = message)
+    }
+
+    fun setLoading(isLoading: Boolean) {
+        signUpState.value = signUpState.value.copy(isLoading = isLoading)
+    }
+
     fun registration() {
         viewModelScope.launch {
-            delay(2000)
-            signUpState.value = signUpState
-                .value
-                .copy(isSignUp =  true)
+            val registrationRequest = RegistrationRequest(
+                email = signUpState.value.email,
+                userName = signUpState.value.name,
+                password = signUpState.value.password
+            )
+            val result = authUseCase.registration(registrationRequest)
+            result.collect {it ->
+                when(it) {
+                    is NetworkResponse.Error -> {
+                        setLoading(false)
+                        setErrorMessage(it.errorMessage)
+                    }
+                    is NetworkResponse.Success<*> -> {
+                        setLoading(false)
+                        signUpState.value = signUpState.value.copy(isSignUp = true)
+
+                    }
+                    is NetworkResponse.Loading -> {
+                        setLoading(true)
+                    }
+                }
+            }
         }
     }
 }
