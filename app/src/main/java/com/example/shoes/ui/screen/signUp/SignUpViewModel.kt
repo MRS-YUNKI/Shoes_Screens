@@ -78,7 +78,7 @@ class SignUpViewModel(val authUseCase: AuthUseCase) : ViewModel() {
 
                     }
                     is NetworkResponse.Loading -> {
-                        setLoading(true)
+                        setLoading(false)
                     }
                 }
             }
