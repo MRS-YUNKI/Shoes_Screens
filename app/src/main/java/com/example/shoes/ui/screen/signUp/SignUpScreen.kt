@@ -50,14 +50,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoes.data.Auth
 import com.example.shoes.data.domain.usecase.AuthUseCase
+import com.example.shoes.ui.screen.signIn.SignInViewModel
 import com.example.shoes.ui.screen.signUp.component.RegButton
 import com.example.shoes.ui.screen.signUp.component.RegTextField
 import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun SignUpScreen(authUseCase: AuthUseCase, onNavigationToProfile: () -> Unit){
-    val signUpViewModel = SignUpViewModel(authUseCase)
+fun SignUpScreen(onNavigationToProfile: () -> Unit){
+    val signUpViewModel = koinViewModel<SignUpViewModel>()
     val snackBarHostState = remember { SnackbarHostState() }
 
     Scaffold(

@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     composable<Registration> {
-                        SignUpScreen(authUseCase) {
+                        SignUpScreen {
                             navController.navigate(route = Profile)
                         }
                     }
