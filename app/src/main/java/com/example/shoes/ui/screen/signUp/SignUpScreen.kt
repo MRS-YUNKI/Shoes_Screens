@@ -1,7 +1,11 @@
 package com.example.shoes.ui.screen.signUp
 
+import android.icu.text.ListFormatter.Width
+import android.inputmethodservice.Keyboard
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +23,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -40,13 +46,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoes.data.Auth
 import com.example.shoes.data.domain.usecase.AuthUseCase
@@ -116,6 +127,19 @@ fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel
             snackbarHostState.showSnackbar(it)
         }
     }
+    OutlinedTextField(
+        value = signUpState.name,
+        onValueChange = { signUpViewModel.setName(it)}
+    )
+    OutlinedTextField(
+        value = signUpState.email,
+        onValueChange = { signUpViewModel.setEmail(it)}
+    )
+    OutlinedTextField(
+        value = signUpState.password,
+        onValueChange = { signUpViewModel.setPassword(it)}
+    )
+
     Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
@@ -240,4 +264,108 @@ fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel
             if (signUpState.isLoading) CircularProgressIndicator(color = Color.Blue)
         }
     }
+}
+
+@Preview
+@Composable
+fun TestingOtpTextField() {
+    val text = remember { mutableStateOf("")}
+    OtpTextField(text.value, 6, hasError = false) {
+        text.value = it
+    }
+}
+
+@Composable
+fun OtpTextField(
+    value: String,
+    length: Int,
+    hasError: Boolean = false,
+    modifier: Modifier = Modifier,
+    boxWidth: Dp = 50.dp,
+    boxHeight: Dp = 100.dp,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+    keyboardActions: KeyboardActions = KeyboardActions(),
+    onValueChanged: (String) -> Unit
+) {
+    BasicTextField(
+        value = value,
+        onValueChange = {
+            if (it.length <= length) {
+                onValueChanged(it)
+            }
+        },
+        modifier = modifier,
+        keyboardActions = keyboardActions,
+        keyboardOptions = keyboardOptions,
+        decorationBox = {
+            val spaceBoxBetween = 12.dp
+            Row(
+                modifier = Modifier
+                    .size(width = (boxWidth + spaceBoxBetween) * length, height = boxHeight),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                val border = BorderStroke(
+                    width = 1.dp,
+                    color = if (hasError) Color.Red else Color.Unspecified
+                )
+                repeat(length) {
+                    Box(
+                        modifier = Modifier
+                            .width(boxWidth)
+                            .height(boxHeight)
+                            .clip(shape = RoundedCornerShape(12.dp))
+                            .background(Color.LightGray)
+                            .border(border, shape = RoundedCornerShape(size = 12.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = value.getOrNull(it)?.toString() ?: "")
+                    }
+                }
+            }
+        }
+    )
+}
+
+@Preview
+@Composable
+fun TestingAuthTopBar(){
+    AuthorizeTopBar { }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AuthorizeTopBar(title: String = "", onNavigationToProfile: () -> Unit){
+    TopAppBar(title = {
+        Text(text = title)
+    },
+        navigationIcon = {
+            IconButton(
+                onNavigationToProfile
+            ) {
+                Icon(painterResource(R.drawable.ic_launcher_foreground), contentDescription = null)
+            }
+        })
+}
+
+@Composable
+fun BaseTimerText(text: @Composable (text: String) -> Unit,
+                  period: Long,
+                  action: () -> Unit)
+{
+    val displayText = remember { mutableStateOf("") }
+    val counter = object : CountDownTimer(period * 1000, 1 * 1000){
+        override fun onTick(millisUntilFinished: Long) {
+            (millisUntilFinished / 1000).seconds.toComponents { minutes, seconds, nanoseconds ->
+                displayText.value = "$minutes:$seconds"
+            }
+        }
+        override fun onFinish() {
+            action()
+        }
+    }
+    LaunchedEffect(Unit) {
+        counter.start()
+    }
+    text(displayText.value)
+
 }
