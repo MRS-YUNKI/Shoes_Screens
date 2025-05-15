@@ -22,4 +22,10 @@
     <string name="incorrect_name">Неправильное имя!</string>
     <string name="on_board1_welcome">ДОБРО\nПОЖАЛОВАТЬ</string>
     <string name="on_board1_start">Начать</string>
+    <string name="on_board2_next">Далее</string>
+    <string name="on_board2_start1">Начнем\n путешествие</string>
+    <string name="on_board2_start2">Умная, великолепная и модная\n коллекция Изучите сейчас</string>
+    <string name="on_board3_next">Далее</string>
+    <string name="on_board3_start1">У Вас Есть Сила,\nЧтобы</string>
+    <string name="on_board3_start2">В вашей комнате много красивых и\nпривлекательных растений</string>
 </resources>

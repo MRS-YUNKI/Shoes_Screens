@@ -1,17 +1,15 @@
-package com.example.shoes.ui.screen.OnBoard.OnBoard1Screen.component
+package com.example.shoes.ui.screen.OnBoard.component
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MovableContent
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.shoes.ui.common.CommonButton
 import com.example.shoes.ui.theme.ShoesTheme
 
 @Composable
-fun OnBoard1Button (
+fun OnBoardButton (
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
@@ -19,7 +17,7 @@ fun OnBoard1Button (
     CommonButton(
         onClick = onClick,
         buttonColors = ButtonDefaults.buttonColors(
-            contentColor = ShoesTheme.colors.background,
+            contentColor = ShoesTheme.colors.text,
             containerColor = ShoesTheme.colors.block,
             disabledContentColor = ShoesTheme.colors.block,
             disabledContainerColor = ShoesTheme.colors.block

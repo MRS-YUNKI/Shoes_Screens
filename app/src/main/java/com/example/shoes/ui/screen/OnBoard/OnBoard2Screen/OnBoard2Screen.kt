@@ -27,7 +27,7 @@ import com.example.shoes.ui.screen.OnBoard.component.OnBoardButton
 import com.example.shoes.ui.theme.ShoesTheme
 
 @Composable
-fun OnBoardThreeScreen(
+fun OnBoardTwoScreen(
 ) {
     Box(
         modifier = Modifier
@@ -50,7 +50,7 @@ fun OnBoardThreeScreen(
             Spacer(modifier = Modifier.height(80.dp))
 
             Image(
-                painter = painterResource(R.drawable.image_3),
+                painter = painterResource(R.drawable.image_2),
                 contentDescription = null,
                 modifier = Modifier.size(width = 375.dp, height = 302.dp)
             )
@@ -59,13 +59,13 @@ fun OnBoardThreeScreen(
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = stringResource(R.string.on_board3_start1),
+                    text = stringResource(R.string.on_board2_start1),
                     style = ShoesTheme.typography.headingBold32.copy(color = Color.White),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 20.dp)
                 )
                 Text(
-                    text = stringResource(R.string.on_board3_start2),
+                    text = stringResource(R.string.on_board2_start2),
                     style = ShoesTheme.typography.bodyRegular16.copy(color = Color.White),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 12.dp)
@@ -73,22 +73,22 @@ fun OnBoardThreeScreen(
 
                 OnboardingIndicatorSvg(
                     totalDots = 3,
-                    selectedIndex = 2,
+                    selectedIndex = 1,
                     modifier = Modifier.padding(top = 16.dp)
                 )
             }
         }
-        OnBoardButton(
-            onClick = { },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 32.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.on_board3_next),
-                style = ShoesTheme.typography.bodyRegular16.copy(color = Color.Black),
-                textAlign = TextAlign.Center
-            )
+            OnBoardButton(
+                onClick = { },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 32.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.on_board2_next),
+                    style = ShoesTheme.typography.bodyRegular16.copy(color = Color.Black),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
-}
