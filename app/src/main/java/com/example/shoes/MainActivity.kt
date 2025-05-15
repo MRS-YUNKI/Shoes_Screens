@@ -14,6 +14,7 @@ import com.example.shoes.data.domain.usecase.AuthUseCase
 import com.example.shoes.data.local.datastore.LocalDataStore
 import com.example.shoes.data.local.localStorage
 import com.example.shoes.data.repository.AuthRepository
+import com.example.shoes.ui.screen.OnBoard.OnBoard1Screen.OnBoardOneScreen
 import com.example.shoes.ui.screen.signIn.SignInScreen
 import com.example.shoes.ui.screen.signUp.SignUpScreen
 import com.example.shoes.ui.screen.splashscreen.SplashScreen
@@ -25,40 +26,46 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val localStorage = localStorage(applicationContext)
-        val authRepository = AuthRepository(RetrofitClient.retrofit)
-        val authUseCase = AuthUseCase(localStorage, authRepository)
+//        val localStorage = localStorage(applicationContext)
+//        val authRepository: AuthRepository = AuthRepository(RetrofitClient.retrofit)
+//        val authUseCase = AuthUseCase(localStorage, authRepository)
         setContent {
-            val navController = rememberNavController()
             ShoesTheme {
-                NavHost(navController, startDestination = SplashScreen) {
-                    composable<SplashScreen> {
-                        SplashScreen(
-                            authUseCase = authUseCase,
-                            onNavigationToProfile = {
-                                navController.navigate(route = Profile)
-                            }
-                        ) {
-                            navController.navigate(route = Registration)
-                        }
-                    }
-                    composable<Registration> {
-                        SignUpScreen {
-                            navController.navigate(route = Profile)
-                        }
-                    }
-                    composable<Profile> {
-                        SignInScreen()
-                    }
-                }
+                OnBoardOneScreen()
             }
         }
     }
 }
-
-@Serializable
-object SplashScreen
-@Serializable
-object Registration
-@Serializable
-object Profile
+//            val navController = rememberNavController()
+//            ShoesTheme {
+//                NavHost(navController, startDestination = SplashScreen) {
+//                    composable<SplashScreen> {
+//                        SplashScreen(
+//                            authUseCase = authUseCase,
+//                            onNavigationToProfile = {
+//                                navController.navigate(route = Profile)
+//                            }
+//                        ) {
+//                            navController.navigate(route = Registration)
+//                        }
+//                    }
+//                    composable<Registration> {
+//                        SignUpScreen {
+//                            navController.navigate(route = Profile)
+//                        }
+//                    }
+//                    composable<Profile> {
+//                        SignInScreen()
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//@Serializable
+//object SplashScreen
+//@Serializable
+//object Registration
+//@Serializable
+//object Profile

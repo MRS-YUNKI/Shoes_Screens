@@ -8,7 +8,7 @@ class NetworkApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidContext(this@NetworkApplication)
+            androidContext(applicationContext)
             modules()
         }
     }

@@ -54,7 +54,7 @@ import com.example.shoes.ui.screen.signIn.SignInViewModel
 import com.example.shoes.ui.screen.signUp.component.RegButton
 import com.example.shoes.ui.screen.signUp.component.RegTextField
 import com.example.shoes.ui.screen.signUp.component.TitleWithSubtitleText
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable

@@ -20,4 +20,6 @@
     <string name="incorrect_password">Неправильный пароль!</string>
     <string name="incorrect_email">Неправильная почта!</string>
     <string name="incorrect_name">Неправильное имя!</string>
+    <string name="on_board1_welcome">ДОБРО\nПОЖАЛОВАТЬ</string>
+    <string name="on_board1_start">Начать</string>
 </resources>

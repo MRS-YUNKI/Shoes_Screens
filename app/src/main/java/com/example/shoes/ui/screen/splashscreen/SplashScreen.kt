@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.example.shoes.R
@@ -19,16 +20,26 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
 @Composable
-fun SplashScreen(authUseCase: AuthUseCase, onNavigationToProfile: () -> Unit, onNavigationToSignUpScreen: () -> Unit){
+fun SplashScreen(
+    authUseCase: AuthUseCase,
+    onNavigationToProfile: () -> Unit,
+    onNavigationToSignUpScreen: () -> Unit){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Blue),
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF48B2E7),
+                        Color(0xFF0076B1)
+                    )
+                )
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )  {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
+            painter = painterResource(R.drawable.matule_me),
             contentDescription =  null
         )
         LaunchedEffect(Unit) {

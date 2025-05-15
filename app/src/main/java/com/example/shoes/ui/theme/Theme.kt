@@ -35,6 +35,7 @@ data class ShoesColors(
 @Immutable
 data class ShoesTextStyles(
     val headingBold32: TextStyle,
+    val headingBold30: TextStyle,
     val subTitleRegular16: TextStyle,
     val bodyRegular16: TextStyle,
     val bodyRegular14: TextStyle,
@@ -44,6 +45,7 @@ data class ShoesTextStyles(
 val LocalShoesTypography = staticCompositionLocalOf {
     ShoesTextStyles(
         headingBold32 = TextStyle.Default,
+        headingBold30 = TextStyle.Default,
         subTitleRegular16 = TextStyle.Default,
         bodyRegular16 = TextStyle.Default,
         bodyRegular14 = TextStyle.Default,
@@ -68,7 +70,8 @@ val shoesFontFamily = FontFamily(
     Font(R.font.roboto_serif_black, FontWeight.Black),
     Font(R.font.roboto_serif_medium, FontWeight.Medium),
     Font(R.font.roboto_serif_extrabold, FontWeight.ExtraBold),
-    Font(R.font.roboto_serif_semibold, FontWeight.SemiBold)
+    Font(R.font.roboto_serif_semibold, FontWeight.SemiBold),
+    Font(R.font.raleway, FontWeight.Normal)
 )
 
 @Composable
@@ -83,6 +86,7 @@ fun ShoesTheme(content: @Composable () -> Unit){
     )
     val shoesTypography = ShoesTextStyles(
         headingBold32 = TextStyle(fontFamily = shoesFontFamily, fontWeight = FontWeight.Bold, fontSize = 32.sp),
+        headingBold30 = TextStyle(fontFamily = shoesFontFamily, fontWeight = FontWeight.Normal, fontSize = 30.sp),
         subTitleRegular16 = TextStyle(fontFamily = shoesFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp),
         bodyRegular16 = TextStyle(fontFamily = shoesFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp),
         bodyRegular14 = TextStyle(fontFamily = shoesFontFamily, fontWeight = FontWeight.Normal, fontSize = 14.sp),
