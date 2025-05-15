@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    kotlin("plugin.serialization") version "1.9.23"
+    alias(libs.plugins.compose.compiler)
+
 }
 
 android {
@@ -60,6 +61,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("androidx.datastore:datastore-preferences:1.1.3")
     implementation("io.insert-koin:koin-androidx-compose:4.1.0-Beta5")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
