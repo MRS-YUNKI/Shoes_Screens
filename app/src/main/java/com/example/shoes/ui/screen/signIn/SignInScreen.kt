@@ -40,13 +40,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.shoes.data.domain.usecase.AuthUseCase
 import com.example.shoes.ui.screen.signIn.component.AuthButton
 import com.example.shoes.ui.screen.signIn.component.AuthTextField
 import com.example.shoes.ui.screen.signIn.component.TitleWithSubtitleText
 
 
 @Composable
-fun SignInScreen(){
+fun SignInScreen(
+    authUseCase: AuthUseCase,
+    onNavigateToSignUp: () -> Unit,
+    onSignInSuccess: () -> Unit
+) {
     val signInViewModel: SignInViewModel = viewModel()
     Scaffold(
         topBar = {
@@ -77,19 +82,22 @@ fun SignInScreen(){
                     style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.subTextDark),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .clickable {
-
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            onNavigateToSignUp()
                         }
                 )
             }
         }
     ) { paddingValues ->
-        SignInContent(paddingValues, signInViewModel)
+        SignInContent(paddingValues, signInViewModel, onSignInSuccess, onNavigateToSignUp)
     }
 }
 
 @Composable
-fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel) {
+fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel, onSignInSuccess: () -> Unit, onNavigateToSignUp: () -> Unit) {
     val signInState = signInViewModel.signInState.value
 
     Column(
@@ -165,7 +173,7 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
         )
 
         AuthButton(
-            onClick = {}
+            onClick = onSignInSuccess
         ) {
             Text(stringResource(R.string.sign_in))
         }

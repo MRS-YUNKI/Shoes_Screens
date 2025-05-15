@@ -10,22 +10,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 
-class AuthUseCase(private val localStorage: localStorage,
-                  private val authRepository: AuthRepository){
-    val token = localStorage.tokenFlow
-    fun registration(registrationRequest: RegistrationRequest): Flow<NetworkResponse> = flow {
+class AuthUseCase(
+    private val localStorage: localStorage,
+    private val authRepository: AuthRepository
+) {
+    val token: Flow<String> = localStorage.tokenFlow
+    suspend fun getToken(): String = localStorage.getToken()
+
+    suspend fun registration(request: RegistrationRequest): Flow<NetworkResponse> = flow {
         try {
             emit(NetworkResponse.Loading)
-            val result = authRepository.registration(registrationRequest)
-            localStorage.setToken(result.second)
-            emit(NetworkResponse.Success(result))
-        }
-        catch (e: Exception) {
-            e.message?.let {
-                emit(NetworkResponse.Error(it))
-                return@flow
-            }
-            emit(NetworkResponse.Error("Unknown Error"))
+            val (user, token) = authRepository.registration(request)
+            localStorage.setToken(token)
+            emit(NetworkResponse.Success(user))
+        } catch (e: Exception) {
+            emit(NetworkResponse.Error(e.message ?: "Registration failed"))
         }
     }
 }

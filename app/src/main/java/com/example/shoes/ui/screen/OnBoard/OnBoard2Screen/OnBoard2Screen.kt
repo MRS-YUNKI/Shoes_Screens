@@ -28,6 +28,7 @@ import com.example.shoes.ui.theme.ShoesTheme
 
 @Composable
 fun OnBoardTwoScreen(
+    onNext: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -78,17 +79,17 @@ fun OnBoardTwoScreen(
                 )
             }
         }
-            OnBoardButton(
-                onClick = { },
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 32.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.on_board2_next),
-                    style = ShoesTheme.typography.bodyRegular16.copy(color = Color.Black),
-                    textAlign = TextAlign.Center
-                )
-            }
+        OnBoardButton(
+            onClick = onNext,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 32.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.on_board2_next),
+                style = ShoesTheme.typography.bodyRegular16.copy(color = Color.Black),
+                textAlign = TextAlign.Center
+            )
         }
     }
+}

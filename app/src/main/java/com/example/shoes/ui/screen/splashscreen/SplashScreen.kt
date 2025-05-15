@@ -1,6 +1,5 @@
 package com.example.shoes.ui.screen.splashscreen
 
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,19 +13,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.example.shoes.R
-import com.example.shoes.data.Auth
 import com.example.shoes.data.domain.usecase.AuthUseCase
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 @Composable
 fun SplashScreen(
     authUseCase: AuthUseCase,
-    onNavigationToProfile: () -> Unit,
-    onNavigationToSignUpScreen: () -> Unit){
+    onNavigationToSignInScreen: () -> Unit
+) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
@@ -35,21 +31,17 @@ fun SplashScreen(
                     )
                 )
             ),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    )  {
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
             painter = painterResource(R.drawable.matule_me),
-            contentDescription =  null
+            contentDescription = null
         )
+
         LaunchedEffect(Unit) {
-            authUseCase.token.collect {
-                if (it != "") {
-                    onNavigationToProfile
-                    return@collect
-                }
-                onNavigationToSignUpScreen
-            }
+            delay(2000)
+            onNavigationToSignInScreen()
         }
     }
 }

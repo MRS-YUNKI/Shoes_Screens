@@ -35,7 +35,9 @@ import com.example.shoes.ui.screen.signIn.component.TitleWithSubtitleText
 import com.example.shoes.ui.theme.ShoesTheme
 
 @Composable
-fun OnBoardOneScreen() {
+fun OnBoardOneScreen(
+    onNext: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +88,7 @@ fun OnBoardOneScreen() {
             modifier = Modifier.padding(bottom = 32.dp)
         ) {
             OnBoardButton(
-                onClick = { }
+                onClick = onNext
             ) {
                 Text(stringResource(R.string.on_board1_start))
             }
