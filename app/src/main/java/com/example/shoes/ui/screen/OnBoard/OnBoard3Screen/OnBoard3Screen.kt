@@ -60,13 +60,13 @@ fun OnBoardThreeScreen(
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = stringResource(R.string.on_board3_start1),
-                    style = ShoesTheme.typography.headingBold32.copy(color = Color.White),
+                    style = ShoesTheme.typography.headingBold32.copy(color = ShoesTheme.colors.background),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 20.dp)
                 )
                 Text(
                     text = stringResource(R.string.on_board3_start2),
-                    style = ShoesTheme.typography.bodyRegular16.copy(color = Color.White),
+                    style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.subTextLight),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 12.dp)
                 )

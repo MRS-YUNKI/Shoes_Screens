@@ -27,6 +27,7 @@ data class ShoesColors(
     val block: Color,
     val text: Color,
     val subTextDark: Color,
+    val subTextLight: Color,
     val background: Color,
     val hint: Color,
     val accent: Color
@@ -58,6 +59,7 @@ val LocalShoesColors = staticCompositionLocalOf {
         block = Color.Unspecified,
         text = Color.Unspecified,
         subTextDark = Color.Unspecified,
+        subTextLight = Color.Unspecified,
         background = Color.Unspecified,
         hint = Color.Unspecified,
         accent = Color.Unspecified
@@ -80,6 +82,7 @@ fun ShoesTheme(content: @Composable () -> Unit){
         block = Color(0xFFFFFFFF),
         text = Color(0xFF2B2B2B),
         subTextDark = Color(0xFF707B81),
+        subTextLight = Color(0xFFD8D8D8),
         background = Color(0xFFF7F7F9),
         hint = Color(0xFF6A6A6A),
         accent = Color(0xFF48B2E7)

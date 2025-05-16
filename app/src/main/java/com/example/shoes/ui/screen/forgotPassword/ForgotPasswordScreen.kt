@@ -44,7 +44,9 @@ import com.example.shoes.ui.screen.signUp.SignUpViewModel
 
 
 @Composable
-fun ForgotPasswordScreen(){
+fun ForgotPasswordScreen(
+    onNavigateToVerification: () -> Unit
+){
     val forgotPasswordViewModel: ForgotPasswordViewModel = viewModel()
     Scaffold(
         topBar = {
@@ -63,12 +65,12 @@ fun ForgotPasswordScreen(){
             }
         }
     ) { paddingValues ->
-        ForgotPasswordContent(paddingValues, forgotPasswordViewModel)
+        ForgotPasswordContent(paddingValues, forgotPasswordViewModel, onNavigateToVerification)
     }
 }
 
 @Composable
-fun ForgotPasswordContent(paddingValues: PaddingValues, forgotPasswordViewModel: ForgotPasswordViewModel){
+fun ForgotPasswordContent(paddingValues: PaddingValues, forgotPasswordViewModel: ForgotPasswordViewModel, onNavigateToVerification: () -> Unit){
     val forgotPasswordState = forgotPasswordViewModel.forgotPasswordState.value
     Column (
         modifier = Modifier.padding(paddingValues = paddingValues)
@@ -101,7 +103,7 @@ fun ForgotPasswordContent(paddingValues: PaddingValues, forgotPasswordViewModel:
         )
 
         ForgotPasswordButton(
-            onClick = {},
+            onClick = onNavigateToVerification
         ) {
             Text(stringResource(R.string.send_message))
         }

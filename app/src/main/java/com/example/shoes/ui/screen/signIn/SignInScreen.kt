@@ -50,7 +50,8 @@ import com.example.shoes.ui.screen.signIn.component.TitleWithSubtitleText
 fun SignInScreen(
     authUseCase: AuthUseCase,
     onNavigateToSignUp: () -> Unit,
-    onSignInSuccess: () -> Unit
+    onSignInSuccess: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit
 ) {
     val signInViewModel: SignInViewModel = viewModel()
     Scaffold(
@@ -82,7 +83,7 @@ fun SignInScreen(
                     style = ShoesTheme.typography.bodyRegular16.copy(color = ShoesTheme.colors.subTextDark),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .clickable(
+                        .clickable (
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
                         ) {
@@ -92,12 +93,12 @@ fun SignInScreen(
             }
         }
     ) { paddingValues ->
-        SignInContent(paddingValues, signInViewModel, onSignInSuccess, onNavigateToSignUp)
+        SignInContent(paddingValues, signInViewModel, onSignInSuccess, onNavigateToForgotPassword)
     }
 }
 
 @Composable
-fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel, onSignInSuccess: () -> Unit, onNavigateToSignUp: () -> Unit) {
+fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel, onSignInSuccess: () -> Unit, onNavigateToForgotPassword: () -> Unit) {
     val signInState = signInViewModel.signInState.value
 
     Column(
@@ -169,7 +170,12 @@ fun SignInContent(paddingValues: PaddingValues, signInViewModel: SignInViewModel
             modifier = Modifier
                 .padding(top = 12.dp, end = 24.dp)
                 .align(Alignment.End)
-                .clickable { }
+                .clickable (
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    onNavigateToForgotPassword()
+                }
         )
 
         AuthButton(
