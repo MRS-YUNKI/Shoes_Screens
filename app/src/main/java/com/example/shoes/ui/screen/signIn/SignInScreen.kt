@@ -44,6 +44,7 @@ import com.example.shoes.data.domain.usecase.AuthUseCase
 import com.example.shoes.ui.screen.signIn.component.AuthButton
 import com.example.shoes.ui.screen.signIn.component.AuthTextField
 import com.example.shoes.ui.screen.signIn.component.TitleWithSubtitleText
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -86,6 +87,7 @@ fun SignInScreen(
                         .clickable (
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
+
                         ) {
                             onNavigateToSignUp()
                         }

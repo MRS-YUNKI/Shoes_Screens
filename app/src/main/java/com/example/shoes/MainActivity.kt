@@ -73,6 +73,7 @@ class MainActivity : ComponentActivity() {
 
                     composable("signUp") {
                         SignUpScreen(
+                            authUseCase = authUseCase,
                             onNavigateToSignIn = {
                                 navController.navigate("signIn") {
                                     popUpTo("signUp") { inclusive = true }
