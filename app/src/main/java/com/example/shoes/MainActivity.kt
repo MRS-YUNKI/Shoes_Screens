@@ -18,6 +18,7 @@ import com.example.shoes.ui.screen.forgotPassword.ForgotPasswordScreen
 import com.example.shoes.ui.screen.signIn.SignInScreen
 import com.example.shoes.ui.screen.signUp.SignUpScreen
 import com.example.shoes.ui.screen.splash.SplashScreen
+import com.example.shoes.ui.screen.verification.VerificationScreen
 import com.example.shoes.ui.theme.ShoesTheme
 
 class MainActivity : ComponentActivity() {
@@ -88,6 +89,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         )
+                    }
+
+                    composable("verification") {
+                        VerificationScreen()
                     }
 
                     composable("onBoard1") {
