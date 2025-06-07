@@ -427,7 +427,7 @@ fun HomeScreen() {
                             .padding(top = 16.dp)
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(
-                            space = 14.dp,
+                            space = 15.dp,
                             alignment = Alignment.Start
                         ),
                         contentPadding = PaddingValues(
