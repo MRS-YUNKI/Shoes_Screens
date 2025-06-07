@@ -3,17 +3,21 @@ package com.example.shoes.ui.screen.signIn.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -59,25 +63,30 @@ fun AuthTextField(
                 },
                 trailingIcon = {
                     if (isPassword) {
-                        IconButton(
-                            onClick = { togglePasswordVisibility?.invoke() },
+                        Box(
                             modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .padding(end = 7.dp)
-                        ) {
-                            val icon = if (isPasswordVisible) {
-                                R.drawable.open_eye
-                            } else {
-                                R.drawable.close_eye
-                            }
-                            Icon(
-                                painter = painterResource(id = icon),
-                                contentDescription = null,
-                                tint = ShoesTheme.colors.hint,
+                                .wrapContentWidth(Alignment.End)
+                                .padding(start = 25.dp)
+                        ){
+                            IconButton(
+                                onClick = { togglePasswordVisibility?.invoke() },
                                 modifier = Modifier
-                                    .width(16.37.dp)
-                                    .height(13.dp)
-                            )
+                                    .size(24.dp)
+                            ) {
+                                val icon = if (isPasswordVisible) {
+                                    R.drawable.open_eye
+                                } else {
+                                    R.drawable.close_eye
+                                }
+                                Icon(
+                                    painter = painterResource(id = icon),
+                                    contentDescription = null,
+                                    tint = ShoesTheme.colors.hint,
+                                    modifier = Modifier
+                                        .width(24.dp)
+                                        .height(24.dp)
+                                )
+                            }
                         }
                     }
                 }

@@ -28,4 +28,8 @@
     <string name="on_board3_next">Далее</string>
     <string name="on_board3_start1">У Вас Есть Сила,\nЧтобы</string>
     <string name="on_board3_start2">В вашей комнате много красивых и\nпривлекательных растений</string>
+    <string name="popUp_dialoge1">Проверьте Ваш Email</string>
+    <string name="popUp_dialoge2">Мы Отправили Код Восстановления Пароля На Вашу Электронную Почту.</string>
+    <string name="otp_title">OTP Проверка</string>
+    <string name="otp_text">Пожалуйста, проверьте свою\nэлектронную почту, чтобы увидеть код подтверждения</string>
 </resources>

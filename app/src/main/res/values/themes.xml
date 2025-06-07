@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.Shoes" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/accent</item>
 
-    <style name="Theme.Shoes" parent="android:Theme.Material.Light.NoActionBar" />
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Shoes.Launch" parent="Theme.Shoes">
+        <item name="android:windowBackground">@drawable/ic_launcher_background</item>
+    </style>
 </resources>

@@ -17,4 +17,14 @@ class ForgotPasswordViewModel : ViewModel() {
     fun setEmail(email: String) {
         forgotPasswordState.value = forgotPasswordState.value.copy(email = email)
     }
+    var popupVisible = mutableStateOf(false)
+        private set
+
+    fun showPopup() {
+        popupVisible.value = true
+    }
+
+    fun hidePopup() {
+        popupVisible.value = false
+    }
 }

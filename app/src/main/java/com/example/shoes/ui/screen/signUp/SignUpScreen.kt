@@ -58,7 +58,10 @@ import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
-fun SignUpScreen(onNavigateToSignIn: () -> Unit){
+fun SignUpScreen(
+    onNavigateToSignIn: () -> Unit,
+    authUseCase: AuthUseCase
+){
     val signUpViewModel = koinViewModel<SignUpViewModel>()
     val snackBarHostState = remember { SnackbarHostState() }
 
